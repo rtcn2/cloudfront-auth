@@ -9,15 +9,23 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-
 steps:
 
 - script: 'cat /etc/issue'
 
-- task: Npm@1
+- task: NodeTool@0
   inputs:
-    command: 'custom'
-    customCommand: 'version'
+    versionSpec: '10.x'
+
+- script: | 
+    echo "Check version"
+    which node
+    echo "Node Version: " 
+    sudo node -v
+    echo "NPM Version: " 
+    sudo npm -v
+  displayName: "Node Version check"
+
 - task: Npm@1
   inputs:
     command: 'install'
