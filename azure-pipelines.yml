@@ -9,8 +9,12 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+
 steps:
 
+- script: 'cat /etc/issue'
+
+- script: 'node version'
 - task: Npm@1
   inputs:
     command: 'install'
