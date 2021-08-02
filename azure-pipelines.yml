@@ -8,8 +8,7 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-  demands:
-   - zip
+
 
 steps:
 - script: 'cat /etc/issue'
