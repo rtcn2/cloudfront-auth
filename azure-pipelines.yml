@@ -54,3 +54,9 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)
   displayName: 'Run a multi-line script'
 
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)/distributions/$(DistributionName)/$(DistributionName).zip'
+    artifact: 'distributionFunction'
+    publishLocation: 'pipeline'
