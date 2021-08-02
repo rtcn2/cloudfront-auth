@@ -15,15 +15,25 @@ steps:
   inputs:
     command: 'install'
     workingDir: '$(Build.SourcesDirectory)'
+    
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(Build.SourcesDirectory)'
+    customCommand: 'audit fix''
 
 - task: Npm@1
   inputs:
     command: 'install'
     workingDir: '$(Build.SourcesDirectory)/build'
 
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(Build.SourcesDirectory)/build'
+    customCommand: 'audit fix''
+
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
     $(Build.SourcesDirectory)/build.sh --distribution $(DistributionName) --method $(AuthMethod) --tenant $(TenantId) --client-id $(ClientId) --client-secret $(CLIENTSECRET) --redirect-uri $(RedirectURI) --session-duration $(SessionDuration) --authz $(AuthZType) --json-user-lookup $(JsonUsernameLookup) 
     ls $(Build.SourcesDirectory)
   displayName: 'Run a multi-line script'
