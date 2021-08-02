@@ -34,7 +34,8 @@ steps:
     customCommand: 'audit fix'
 
 - script: |
-    $(Build.SourcesDirectory)/build.sh --distribution $(DistributionName) --method $(AuthMethod) --tenant $(TenantId) --client-id $(ClientId) --client-secret $(CLIENTSECRET) --redirect-uri $(RedirectURI) --session-duration $(SessionDuration) --authz $(AuthZType) --json-user-lookup $(JsonUsernameLookup) 
+    ./build.sh --distribution $(DistributionName) --method $(AuthMethod) --tenant $(TenantId) --client-id $(ClientId) --client-secret $(CLIENTSECRET) --redirect-uri $(RedirectURI) --session-duration $(SessionDuration) --authz $(AuthZType) --json-user-lookup $(JsonUsernameLookup) 
     ls $(Build.SourcesDirectory)
+  workingDirectory: $(Build.SourcesDirectory)
   displayName: 'Run a multi-line script'
 
