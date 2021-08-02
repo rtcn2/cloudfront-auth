@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "console": "^0.7.2",
     "minimist": "^1.2.5",
     "node-rsa": "^0.4.2",
     "prompt": "^1.0.0",

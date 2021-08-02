@@ -6,6 +6,7 @@ const colors = require('colors/safe');
 const url = require('url');
 const R = require('ramda');
 const parseArgs = require('minimist');
+const console = require('console');
 
 var config = { AUTH_REQUEST: {}, TOKEN_REQUEST: {} };
 var oldConfig;
@@ -63,12 +64,15 @@ prompt.get({
   }
 }, function (err, result) {
   config.DISTRIBUTION = result.distribution;
+  console.log('Create distributions dir');
   shell.mkdir('-p', 'distributions/' + config.DISTRIBUTION);
   if (fs.existsSync('distributions/' + config.DISTRIBUTION + '/config.json')) {
     oldConfig = JSON.parse(fs.readFileSync('./distributions/' + config.DISTRIBUTION + '/config.json', 'utf8'));
   }
   if (!fs.existsSync('distributions/' + config.DISTRIBUTION + '/id_rsa') || !fs.existsSync('./distributions/' + config.DISTRIBUTION + '/id_rsa.pub')) {
+    console.log('Create rsa key');
     shell.exec("ssh-keygen -t rsa -m PEM -b 4096 -f ./distributions/" + config.DISTRIBUTION + "/id_rsa -N ''");
+    console.log('Create pem file');
     shell.exec("openssl rsa -in ./distributions/" + config.DISTRIBUTION + "/id_rsa -pubout -outform PEM -out ./distributions/" + config.DISTRIBUTION + "/id_rsa.pub");
   }
   switch (result.method) {
@@ -84,6 +88,7 @@ prompt.get({
         oldConfig = undefined;
       }
       config.AUTHN = "MICROSOFT";
+      console.log('Configuring microsoft config');
       microsoftConfiguration();
       break;
     case '3':
@@ -182,7 +187,7 @@ function microsoftConfiguration() {
     config.TOKEN_REQUEST.client_secret = result.CLIENT_SECRET;
 
     config.AUTHZ = result.AUTHZ;
-
+    console.log('write microsoft config to distribution');
     shell.cp('./authz/microsoft.js', './distributions/' + config.DISTRIBUTION + '/auth.js');
     shell.cp('./authn/openid.index.js', './distributions/' + config.DISTRIBUTION + '/index.js');
     shell.cp('./nonce.js', './distributions/' + config.DISTRIBUTION + '/nonce.js');
@@ -192,6 +197,7 @@ function microsoftConfiguration() {
     switch (result.AUTHZ) {
       case '1':
         shell.cp('./authz/microsoft.js', './distributions/' + config.DISTRIBUTION + '/auth.js');
+        console.log('writing zip file');
         writeConfig(config, zip, ['config.json', 'index.js', 'auth.js', 'nonce.js']);
         break;
       case '2':
