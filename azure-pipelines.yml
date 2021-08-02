@@ -8,9 +8,10 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  demands:
+   - zip
 
 steps:
-
 - script: 'cat /etc/issue'
 
 - task: NodeTool@0
@@ -21,9 +22,11 @@ steps:
     echo "Check version"
     which node
     echo "Node Version: " 
-    sudo node -v
+    node -v
     echo "NPM Version: " 
-    sudo npm -v
+    npm -v
+    echo "zip version: "
+    zip -v
   displayName: "Node Version check"
 
 - task: Npm@1
