@@ -131,7 +131,7 @@ prompt.get({
       process.exit(1);
   }
 });
-
+process.exit(0);
 function microsoftConfiguration() {
   prompt.message = colors.blue(">>");
   prompt.start();
