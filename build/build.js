@@ -220,8 +220,8 @@ function microsoftConfiguration() {
       default:
         console.log("Method not recognized. Stopping build...");
     }
-  process.exit(0);
   });
+  process.exit(0);
 }
 
 function googleConfiguration() {
