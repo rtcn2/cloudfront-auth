@@ -197,7 +197,7 @@ function microsoftConfiguration() {
     switch (result.AUTHZ) {
       case '1':
         shell.cp('./authz/microsoft.js', './distributions/' + config.DISTRIBUTION + '/auth.js');
-        console.log('writing zip file');
+        console.log('About write zip file');
         writeConfig(config, zip, ['config.json', 'index.js', 'auth.js', 'nonce.js']);
         break;
       case '2':
@@ -213,7 +213,7 @@ function microsoftConfiguration() {
           }
         }, function (err, result) {
           config.JSON_USERNAME_LOOKUP = result.JSON_USERNAME_LOOKUP;
-                  console.log('writing zip file');
+          console.log('About to write zip file');
           writeConfig(config, zip, ['config.json', 'index.js', 'auth.js', 'nonce.js']);
         });
         break;
@@ -635,12 +635,13 @@ function zip(files) {
   for (var i = 0; i < files.length; i++) {
     filesString += ' distributions/' + config.DISTRIBUTION + '/' + files[i] + ' ';
   }
-  shell.exec('zip -q distributions/' + config.DISTRIBUTION + '/' + config.DISTRIBUTION + '.zip ' + 'package-lock.json package.json -r node_modules');
-  shell.exec('zip -q -r -j distributions/' + config.DISTRIBUTION + '/' + config.DISTRIBUTION + '.zip ' + filesString);
+  shell.exec('zip distributions/' + config.DISTRIBUTION + '/' + config.DISTRIBUTION + '.zip ' + 'package-lock.json package.json -r node_modules');
+  shell.exec('zip -r -j distributions/' + config.DISTRIBUTION + '/' + config.DISTRIBUTION + '.zip ' + filesString);
   console.log(colors.green("Done... created Lambda function distributions/" + config.DISTRIBUTION + "/" + config.DISTRIBUTION + ".zip"));
 }
 
 function writeConfig(result, callback, files) {
+  console.log("Writing Zip file");
   fs.writeFile('distributions/' + config.DISTRIBUTION + '/config.json', JSON.stringify(result, null, 4), (err) => {
     if (err) throw err;
     callback(files);
