@@ -55,7 +55,7 @@ steps:
     echo '$(Build.SourcesDirectory):'
     ls $(Build.SourcesDirectory)
     echo '$(Build.SourcesDirectory)/distributions/$(DistributionName):'
-    ls $(Build.SourcesDirectory)/distributions/
+    ls $(Build.SourcesDirectory)/distributions/$(DistributionName)
   workingDirectory: $(Build.SourcesDirectory)
   displayName: 'Run a multi-line script'
 
