@@ -221,7 +221,6 @@ function microsoftConfiguration() {
         console.log("Method not recognized. Stopping build...");
     }
   });
-  process.exit(0);
 }
 
 function googleConfiguration() {
